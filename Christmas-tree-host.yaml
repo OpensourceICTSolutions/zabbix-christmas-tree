@@ -1,0 +1,73 @@
+zabbix_export:
+  version: '6.2'
+  date: '2022-12-21T10:42:18Z'
+  host_groups:
+    -
+      uuid: 01ff782a699840b1905e70075be25467
+      name: Christmas
+  hosts:
+    -
+      host: 'Christmas tree'
+      name: 'Christmas tree'
+      status: DISABLED
+      groups:
+        -
+          name: Christmas
+      items:
+        -
+          name: Balls_green
+          type: SCRIPT
+          key: balls.green
+          delay: 2s
+          params: 'return 1'
+          triggers:
+            -
+              expression: |
+                ({TRIGGER.VALUE}=0 and last(/Christmas tree/balls.green)=1)
+                or
+                ({TRIGGER.VALUE}=1 and last(/Christmas tree/balls.green)=0)
+              name: 'Green toggle'
+              priority: DISASTER
+        -
+          name: Balls_red
+          type: SCRIPT
+          key: balls.red
+          delay: 3s
+          params: 'return 1'
+          triggers:
+            -
+              expression: |
+                ({TRIGGER.VALUE}=0 and last(/Christmas tree/balls.red)=1)
+                or
+                ({TRIGGER.VALUE}=1 and last(/Christmas tree/balls.red)=0)
+              name: 'Red toggle'
+              priority: DISASTER
+        -
+          name: Balls_yellow
+          type: SCRIPT
+          key: balls.yellow
+          delay: 1s
+          params: 'return 1'
+          triggers:
+            -
+              expression: |
+                ({TRIGGER.VALUE}=0 and last(/Christmas tree/balls.yellow)=1)
+                or
+                ({TRIGGER.VALUE}=1 and last(/Christmas tree/balls.yellow)=0)
+              name: 'Yellow toggle'
+              priority: DISASTER
+        -
+          name: Peak
+          type: SCRIPT
+          key: peak
+          delay: 4s
+          params: 'return 1'
+          triggers:
+            -
+              expression: |
+                ({TRIGGER.VALUE}=0 and last(/Christmas tree/peak)=1)
+                or
+                ({TRIGGER.VALUE}=1 and last(/Christmas tree/peak)=0)
+              name: 'Peak toggle'
+              priority: DISASTER
+      inventory_mode: DISABLED
